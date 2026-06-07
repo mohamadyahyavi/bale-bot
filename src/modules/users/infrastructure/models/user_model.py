@@ -8,14 +8,15 @@ from sqlalchemy import (
 )
 
 from sqlalchemy.dialects.postgresql import UUID
-
+import uuid
 from src.db.base import Base
+from sqlalchemy import Column
 
 
 class UserModel(Base):
     __tablename__ = "users"
 
-    id = Column(UUID(as_uuid=True), primary_key=True,autoincrement=True)
+    id = Column(UUID(as_uuid=True), primary_key=True,default=uuid.uuid4)
 
     bale_user_id = Column(String, unique=True, nullable=False)
 
