@@ -16,7 +16,7 @@ from sqlalchemy import Column
 class UserModel(Base):
     __tablename__ = "users"
 
-    id = Column(UUID(as_uuid=True), primary_key=True,default=uuid.uuid4)
+    id = Column(UUID(as_uuid=True), primary_key=True)
 
     bale_user_id = Column(String, unique=True, nullable=False)
 
@@ -36,11 +36,30 @@ class UserModel(Base):
     department_id = Column(
         UUID(as_uuid=True),
         ForeignKey("departments.id"),
-        nullable=False
+        nullable=True
     )
 
     contract_start_date = Column(Date)
 
     contract_end_date = Column(Date)
+
+
+    access_level = Column(
+        String(20),
+        nullable=False,
+        default="EMPLOYEE",
+    )
+
+
+    # ======================
+    # Leave
+    # ======================
+
+    total_leave_hours = Column(
+        Integer,
+        nullable=False,
+        default=0,
+    )
+
 
     is_active = Column(Boolean, default=True,nullable=False)
