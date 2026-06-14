@@ -4,8 +4,10 @@ from uuid import UUID
 
 @dataclass
 class Department:
-    id: UUID
+    
 
     name: str
 
     manager_user_id: UUID
+
+    id: UUID | None=None

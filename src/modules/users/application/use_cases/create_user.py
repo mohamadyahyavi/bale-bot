@@ -11,7 +11,7 @@ class CreateUserUseCase:
     async def execute(self, data):
 
         user = User(
-            id=uuid4(),
+            
             bale_user_id=data.bale_user_id,
             first_name=data.first_name,
             last_name=data.last_name,
@@ -22,6 +22,8 @@ class CreateUserUseCase:
             contract_start_date=data.contract_start_date,
             contract_end_date=data.contract_end_date,
             is_active=True
+            total_leave_hours: int = 0
+            access_level:str="EMPLOYEE"
         )
 
         return await self.repository.create(user)

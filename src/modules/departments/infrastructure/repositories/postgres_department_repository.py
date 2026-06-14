@@ -71,18 +71,6 @@ class PostgresDepartmentRepository:
 
         return department
 
-    async def delete(self, department_id: UUID):
-
-        department = await self.get_by_id(department_id)
-
-        if not department:
-            return False
-
-        await self.session.delete(department)
-
-        await self.session.commit()
-
-        return True
 
     async def is_manager(self, user_id: UUID) -> bool:
 

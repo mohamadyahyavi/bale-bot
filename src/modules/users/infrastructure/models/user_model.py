@@ -16,12 +16,12 @@ from sqlalchemy import Column
 class UserModel(Base):
     __tablename__ = "users"
 
-    id = Column(UUID(as_uuid=True), primary_key=True)
+    id = Column(UUID(as_uuid=True), primary_key=True,default=uuid.uuid4)
 
     bale_user_id = Column(String, unique=True, nullable=False)
 
-    first_name = Column(String)
-    last_name = Column(String)
+    first_name = Column(String(100))
+    last_name = Column(String(100))
 
     email = Column(
         String(255)
@@ -31,7 +31,7 @@ class UserModel(Base):
         String(20)
     )
 
-    kimai_user_id = Column(Integer, unique=True, nullable=False)
+    kimai_user_id = Column(Integer, unique=True, nullable=True)
 
     department_id = Column(
         UUID(as_uuid=True),

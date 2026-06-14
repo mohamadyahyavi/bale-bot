@@ -14,7 +14,7 @@ class PostgresUserRepository:
     async def create(self, user):
 
         db_user = UserModel(
-            id=user.id,
+            
             bale_user_id=user.bale_user_id,
             first_name=user.first_name,
             last_name=user.last_name,
@@ -24,7 +24,11 @@ class PostgresUserRepository:
             department_id=user.department_id,
             contract_start_date=user.contract_start_date,
             contract_end_date=user.contract_end_date,
-            is_active=user.is_active
+            is_active=user.is_active,
+            total_leave_hours=user.total_leave_hours,
+
+            access_level=user.access_level
+
         )
 
         self.session.add(db_user)
@@ -54,3 +58,75 @@ class PostgresUserRepository:
         result = await self.session.execute(stmt)
 
         return result.scalar_one_or_none()
+    
+
+    async def get_by_department_id(
+        self,
+        department_id: UUID
+    ):
+
+        stmt = select(
+            UserModel
+        ).where(
+            UserModel.department_id == department_id
+        )
+
+
+        result = await self.session.execute(
+            stmt
+        )
+
+
+        return result.scalars().all()
+    
+
+
+    async def get_all(self):
+
+            stmt = select(UserModel)
+
+            result = await self.session.execute(stmt)
+
+            return result.scalars().all()
+    
+    
+    
+    async def update(
+    self,
+    user_id: UUID,
+    data
+    ):
+
+        user = await self.get_by_id(
+        user_id
+        )
+
+
+        if not user:
+           return None
+
+
+        update_data = data.model_dump(
+               exclude_unset=True
+        )
+
+
+        for field, value in update_data.items():
+
+            setattr(
+            user,
+            field,
+            value
+            )
+
+
+        await self.session.commit()
+
+
+        await self.session.refresh(
+        user
+        )
+
+        return user
+    
+    

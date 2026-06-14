@@ -1,7 +1,7 @@
 from uuid import UUID
 
 
-class UpdateUserUseCase:
+class GetUserUseCase:
 
     def __init__(
         self,
@@ -12,8 +12,7 @@ class UpdateUserUseCase:
 
     async def execute(
         self,
-        user_id: UUID,
-        data
+        user_id: UUID
     ):
 
         user = await self.repository.get_by_id(
@@ -27,7 +26,4 @@ class UpdateUserUseCase:
             )
 
 
-        return await self.repository.update(
-            user_id,
-            data
-        )
+        return user

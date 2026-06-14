@@ -3,7 +3,7 @@ from uuid import UUID
 from datetime import date
 
 class UserResponse(BaseModel):
-    id: UUID
+   
 
     bale_user_id: str
 
@@ -21,6 +21,10 @@ class UserResponse(BaseModel):
     contract_end_date: date | None
 
     is_active: bool
+
+    access_level: str
+
+    total_leave_hours: int
 
     class Config:
         from_attributes = True
